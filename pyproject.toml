@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "meimei"
+version = "0.0.0"
+description = "A web app interfacing an AI that can spot cats."
+authors = ["petejh <petejh.code@q.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+flask = "^1.1.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+python-dotenv = "^0.17"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

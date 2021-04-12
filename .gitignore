@@ -1,0 +1,24 @@
+# compiler artifacts
+__pycache__/
+
+# packaging
+build/
+dist/
+*.egg-info/
+poetry.lock
+
+# test artifacts
+.pytest_cache/
+.tox/
+
+# local environment
+.env
+.venv
+env/
+venv/
+.python-version
+tmp/
+
+# logs
+*.log
+log/
