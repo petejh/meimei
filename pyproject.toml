@@ -6,12 +6,17 @@ authors = ["petejh <petejh.code@q.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+# upper bound on Python version is due to numpy
+python = "^3.9, <3.11"
 flask = "^1.1.2"
+deepen = {git = "https://github.com/petejh/deepen.git"}
+numpy = "^1.21.2"
+Pillow = "^8.3.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 python-dotenv = "^0.17"
+h5py = "^3.4.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

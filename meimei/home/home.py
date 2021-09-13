@@ -1,4 +1,9 @@
 import imghdr
+import os
+
+import deepen
+import numpy as np
+from PIL import Image
 
 from flask import (
     abort,
@@ -25,6 +30,17 @@ def detect_image(stream):
     current_app.logger.info(f'Detected image {format=}')
     return format
 
+def get_model():
+    here = os.path.dirname(os.path.abspath(__file__))
+    model_file = "../models/model.h5"
+    model_path = os.path.normpath(os.path.join(here, model_file))
+
+    current_app.logger.info(f'Loading model from file: {model_path}')
+    model = deepen.Model()
+    model.load(model_path)
+    current_app.logger.info(f'{model.layer_dims=}')
+    return model
+
 @home_bp.route('/', methods=['GET'])
 def home():
     return render_template('index.html.jinja2', title='Home', prediction='???')
@@ -38,6 +54,14 @@ def predict():
         current_app.logger.error(f'Uploaded file is not a valid image.')
         abort(400, 'Not a valid image.')
 
-    prediction = 'a cat'
+    model = get_model()
+
+    image= Image.open(upload.stream).resize((64, 64))
+    current_app.logger.info(f'{image.size=}, {image.mode=}')
+    image_data = np.asarray(image).reshape((64*64*3, 1)) / 255
+    current_app.logger.info(f'{image_data.shape=}')
+
+    prob = model.predict(image_data)
+    prediction = 'a cat' if prob.all() else 'not a cat'
 
     return render_template('index.html.jinja2', title='Home', prediction=prediction)
